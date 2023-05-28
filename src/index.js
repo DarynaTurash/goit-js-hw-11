@@ -23,9 +23,7 @@ function onSearchImages(evt) {
     evt.preventDefault();
     refs.cardsContainer.innerHTML = '';
     page = 1;
-    
-    
-
+    refs.btnLoadMore.classList.remove('is-hidden');
     searchValue = refs.input.value.trim();
 
     if(searchValue !== '') {
@@ -37,15 +35,14 @@ function onSearchImages(evt) {
                 } else {
                     response.data.hits.forEach(object => 
                     makeCardMarkUp({ webformatURL, tags, likes, views, comments, downloads} = object)
-                    );
-                    
-                    refs.btnLoadMore.classList.remove('is-hidden');
+                    );   
                 }
-            });
+            }).catch((error => console.log(error)))
     } else {
         Notify.info("Oops, we can't find anything from an empty field - write something please");
     }
-};
+}
+
 
 
 async function fetchImages(value, page) {
@@ -103,7 +100,7 @@ function onLoadMore() {
                     Notify.info("We're sorry, but you've reached the end of search results.");
                 }
             }
-        });
+        }).catch(error => console.log(error));
 }
 
 
