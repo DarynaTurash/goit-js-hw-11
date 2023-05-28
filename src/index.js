@@ -6,46 +6,56 @@ const refs = {
     btnSearch: document.querySelector('.search-form > button'),
     input: document.querySelector('input'),
     cardsContainer: document.querySelector('.gallery'),
+    btnLoadMore: document.querySelector('.load-more'),
 }
 
+let page = 0;
+let searchValue = '';
+refs.btnLoadMore.classList.add('is-hidden');
+const PER_PAGE = 40;
+
+
 refs.form.addEventListener('submit', onSearchImages);
+refs.btnLoadMore.addEventListener('click', onLoadMore);
+
 
 function onSearchImages(evt) {
     evt.preventDefault();
     refs.cardsContainer.innerHTML = '';
-    const searchValue = refs.input.value.trim();
-
-    
-    fetchImages(searchValue).then(response => {
-        console.log(response.data);
-        
-            if (response.data.hits.length === 0) {
-                Notify.failure('Sorry, there are no images matching your search query. Please try again.');
-            } else {
-                response.data.hits.forEach(object => 
-                makeCardMarkUp({ webformatURL, tags, likes, views, comments, downloads} = object)
-                );
-            }
-            
-        });
-
-        
-
-    
-        
+    page = 1;
+    refs.btnLoadMore.classList.remove('is-hidden');
     
 
+    searchValue = refs.input.value.trim();
+
+    if(searchValue !== '') {
+        fetchImages(searchValue, page).then(response => {
+            console.log(response.data);
     
+                if (response.data.hits.length === 0) {
+                    Notify.failure('Sorry, there are no images matching your search query. Please try again.');
+                } else {
+                    response.data.hits.forEach(object => 
+                    makeCardMarkUp({ webformatURL, tags, likes, views, comments, downloads} = object)
+                    );
+                }
+            });
+    } else {
+        Notify.info("Oops, we can't find anything from an empty field - write something please");
+    }
 };
 
 
-async function fetchImages(value) {
+async function fetchImages(value, page) {
+
     const params = new URLSearchParams({
         key: "36806904-a94ef5850b37be256607932e3",
         q: value,
         image_type: 'photo',
         orientation: 'horizontal',
         safesearch: 'true',
+        per_page: PER_PAGE,
+        page
     });
 
     return await axios.get(`https://pixabay.com/api/?${params}`);
@@ -73,5 +83,26 @@ function makeCardMarkUp({ webformatURL, tags, likes, views, comments, downloads}
 
     refs.cardsContainer.insertAdjacentHTML('beforeend', oneCardMarkUp);
 }
+
+function onLoadMore() {
+    page += 1;
+
+    fetchImages(searchValue, page).then(response => {
+        console.log(response.data);
+
+            if (response.data.hits.length === 0) {
+                Notify.failure('Sorry, there are no images matching your search query. Please try again.');
+            } else {
+                response.data.hits.forEach(object => 
+                makeCardMarkUp({ webformatURL, tags, likes, views, comments, downloads} = object)
+                );
+
+                if(page === Math.ceil(response.data.totalHits / PER_PAGE)) {
+                    Notify.info("We're sorry, but you've reached the end of search results.");
+                }
+            }
+        });
+}
+
 
 

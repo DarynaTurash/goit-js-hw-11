@@ -1,3 +1,7 @@
+body {
+margin: 0;
+}
+
 .gallery {
     display: flex;
     gap: 25px;
@@ -33,3 +37,98 @@ b {
 span {
     font-weight: 600;
 }
+
+.container {
+    background-color: rgb(235, 254, 255);
+    width: 100%;
+    padding: 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.search-form {
+    display: flex;
+    justify-content: center;
+}
+
+input {
+    padding: 10px;
+    width: 250px;
+    border: 0;
+}
+
+input:active,
+input:focus-visible,
+input:hover {
+outline-color: rgb(88, 138, 209);
+border-radius: 0;
+}
+
+input::placeholder {
+    color: rgb(141, 141, 141);
+}
+
+form > button {
+    background-image: url(./img/search1.svg);
+    background-repeat: no-repeat;
+    background-size: 20px;
+    background-position: center;
+    width: 40px;
+    border: 0;
+    background-color: white;
+}
+
+form > button:hover {
+    background-image: url(./img/searchwhite.svg);
+    background-color: rgb(88, 138, 209);
+}
+
+.is-hidden {
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+    height: 1px;
+    border: 0;
+    padding: 0;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    margin: -1px;
+}
+
+#myBtn {
+    display: none; 
+    position: fixed; 
+    bottom: 20px; 
+    right: 30px; 
+    z-index: 99; 
+    border: none; 
+    outline: none; 
+    background-color: rgb(88, 138, 209); 
+    color: white; 
+    cursor: pointer; 
+    padding: 33px;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background-image: url(./img/arrow.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  
+  #myBtn:hover {
+    background-color: #555; 
+  }
+
+.load-more {
+    margin-top: 20px;
+    padding: 10px;
+    width: 250px;
+    border: 0;
+    background-color: rgb(88, 138, 209);
+    color: white;
+}
+
+.btn-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
