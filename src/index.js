@@ -23,7 +23,7 @@ function onSearchImages(evt) {
     evt.preventDefault();
     refs.cardsContainer.innerHTML = '';
     page = 1;
-    refs.btnLoadMore.classList.remove('is-hidden');
+    
     
 
     searchValue = refs.input.value.trim();
@@ -38,6 +38,8 @@ function onSearchImages(evt) {
                     response.data.hits.forEach(object => 
                     makeCardMarkUp({ webformatURL, tags, likes, views, comments, downloads} = object)
                     );
+                    
+                    refs.btnLoadMore.classList.remove('is-hidden');
                 }
             });
     } else {
