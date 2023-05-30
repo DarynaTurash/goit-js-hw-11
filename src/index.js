@@ -1,5 +1,6 @@
-import axios from 'axios';
+
 import { Notify } from "notiflix";
+import { fetchImages, PER_PAGE } from './js/fetchImages';
 
 const refs = {
     form: document.querySelector('.search-form'),
@@ -12,7 +13,7 @@ const refs = {
 let page = 0;
 let searchValue = '';
 refs.btnLoadMore.classList.add('is-hidden');
-const PER_PAGE = 40;
+
 
 
 refs.form.addEventListener('submit', onSearchImages);
@@ -42,23 +43,6 @@ function onSearchImages(evt) {
         Notify.info("Oops, we can't find anything from an empty field - write something please");
     }
 }
-
-
-
-async function fetchImages(value, page) {
-
-    const params = new URLSearchParams({
-        key: "36806904-a94ef5850b37be256607932e3",
-        q: value,
-        image_type: 'photo',
-        orientation: 'horizontal',
-        safesearch: 'true',
-        per_page: PER_PAGE,
-        page
-    });
-
-    return await axios.get(`https://pixabay.com/api/?${params}`);
-};
 
 function makeCardMarkUp({ webformatURL, tags, likes, views, comments, downloads}) {
     const oneCardMarkUp = `<div class="photo-card">
