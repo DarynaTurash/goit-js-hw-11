@@ -35,7 +35,7 @@ function onSearchImages(evt) {
                     Notify.failure('Sorry, there are no images matching your search query. Please try again.');
                 } else {
                     response.data.hits.forEach(object => 
-                    makeCardMarkUp({ webformatURL, tags, likes, views, comments, downloads} = object)
+                    makeMarkUpCard({ webformatURL, tags, likes, views, comments, downloads} = object)
                     );   
                 }
             }).catch((error => console.log(error)))
@@ -44,7 +44,7 @@ function onSearchImages(evt) {
     }
 }
 
-function makeCardMarkUp({ webformatURL, tags, likes, views, comments, downloads}) {
+function makeMarkUpCard({ webformatURL, tags, likes, views, comments, downloads}) {
     const oneCardMarkUp = `<div class="photo-card">
     <img src="${webformatURL}" alt="${tags}" loading="lazy"/>
     <div class="info">
@@ -77,7 +77,7 @@ function onLoadMore() {
                 Notify.failure('Sorry, there are no images matching your search query. Please try again.');
             } else {
                 response.data.hits.forEach(object => 
-                makeCardMarkUp({ webformatURL, tags, likes, views, comments, downloads} = object)
+                makeMarkUpCard({ webformatURL, tags, likes, views, comments, downloads} = object)
                 );
 
                 if(page === Math.ceil(response.data.totalHits / PER_PAGE)) {
