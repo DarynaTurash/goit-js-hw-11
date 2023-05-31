@@ -35,7 +35,7 @@ function onSearchImages(evt) {
                     Notify.failure('Sorry, there are no images matching your search query. Please try again.');
                 } else {
                     response.data.hits.forEach(object => 
-                    makeMarkUpCard({ webformatURL, tags, likes, views, comments, downloads} = object)
+                    makeMarkUpCard(object)
                     );   
                 }
             }).catch((error => console.log(error)))
@@ -77,7 +77,7 @@ function onLoadMore() {
                 Notify.failure('Sorry, there are no images matching your search query. Please try again.');
             } else {
                 response.data.hits.forEach(object => 
-                makeMarkUpCard({ webformatURL, tags, likes, views, comments, downloads} = object)
+                makeMarkUpCard(object)
                 );
 
                 if(page === Math.ceil(response.data.totalHits / PER_PAGE)) {
