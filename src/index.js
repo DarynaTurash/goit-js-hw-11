@@ -24,7 +24,6 @@ function onSearchImages(evt) {
     evt.preventDefault();
     refs.cardsContainer.innerHTML = '';
     page = 1;
-    refs.btnLoadMore.classList.remove('is-hidden');
     searchValue = refs.input.value.trim();
 
     if(searchValue !== '') {
@@ -36,7 +35,11 @@ function onSearchImages(evt) {
                 } else {
                     response.data.hits.forEach(object => 
                     makeMarkUpCard(object)
-                    );   
+                    );  
+                    
+                    if(page < Math.ceil(response.data.totalHits / PER_PAGE)) {
+                        refs.btnLoadMore.classList.remove('is-hidden');
+                    }
                 }
             }).catch((error => console.log(error)))
     } else {
@@ -82,7 +85,7 @@ function onLoadMore() {
 
                 if(page === Math.ceil(response.data.totalHits / PER_PAGE)) {
                     Notify.info("We're sorry, but you've reached the end of search results.");
-                }
+                } 
             }
         }).catch(error => console.log(error));
 }
