@@ -16,6 +16,7 @@ refs.btnLoadMore.classList.add('is-hidden');
 
 
 
+
 refs.form.addEventListener('submit', onSearchImages);
 refs.btnLoadMore.addEventListener('click', onLoadMore);
 
@@ -25,6 +26,8 @@ function onSearchImages(evt) {
     refs.cardsContainer.innerHTML = '';
     page = 1;
     searchValue = refs.input.value.trim();
+    refs.btnLoadMore.classList.add('is-hidden');
+    
 
     if(searchValue !== '') {
         fetchImages(searchValue, page).then(response => {
@@ -39,6 +42,9 @@ function onSearchImages(evt) {
                     
                     if(page < Math.ceil(response.data.totalHits / PER_PAGE)) {
                         refs.btnLoadMore.classList.remove('is-hidden');
+                    } else if(page === Math.ceil(response.data.totalHits / PER_PAGE)) {
+                        refs.btnLoadMore.classList.add('is-hidden');
+                        
                     }
                 }
             }).catch((error => console.log(error)))
@@ -85,6 +91,7 @@ function onLoadMore() {
 
                 if(page === Math.ceil(response.data.totalHits / PER_PAGE)) {
                     Notify.info("We're sorry, but you've reached the end of search results.");
+                    refs.btnLoadMore.classList.add('is-hidden');
                 } 
             }
         }).catch(error => console.log(error));

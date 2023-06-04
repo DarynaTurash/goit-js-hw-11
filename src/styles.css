@@ -132,3 +132,9 @@ form > button:hover {
     justify-content: center;
 }
 
+.load-more:hover {
+    background-color: rgb(54, 103, 171);
+}
+
+
+
